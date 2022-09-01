@@ -12,6 +12,7 @@
   "author": "Bhaumic-kun",
   "license": "ISC",
   "devDependencies": {
+    "@three-ts/orbit-controls": "^1.4.7",
     "@types/body-parser": "^1.19.2",
     "@types/three": "^0.143.2",
     "@types/webpack": "^5.28.0",

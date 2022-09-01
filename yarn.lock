@@ -52,6 +52,13 @@
   resolved "https://registry.yarnpkg.com/@leichtgewicht/ip-codec/-/ip-codec-2.0.4.tgz#b2ac626d6cb9c8718ab459166d4bb405b8ffa78b"
   integrity sha512-Hcv+nVC0kZnQ3tD9GVu5xSMR4VVYOteQIr/hwFPVEvPdlXqgGEuRjiheChHgdM+JyqdgNcmzZOX/tnl0JOiI7A==
 
+"@three-ts/orbit-controls@^1.4.7":
+  version "1.4.7"
+  resolved "https://registry.yarnpkg.com/@three-ts/orbit-controls/-/orbit-controls-1.4.7.tgz#5bfda19bfb148ac0e494bd2ae8e9e5fcf640fa2a"
+  integrity sha512-1OVZnc2VTHCoHberL50LBbltjnqVpOBhmuJwKPqzn6sThQwvVU1E13cpuJ2SWWOMoMLF+4hE3ICi4KHsZA/CJw==
+  dependencies:
+    three "^0.126.1"
+
 "@types/body-parser@*", "@types/body-parser@^1.19.2":
   version "1.19.2"
   resolved "https://registry.yarnpkg.com/@types/body-parser/-/body-parser-1.19.2.tgz#aea2059e28b7658639081347ac4fab3de166e6f0"
@@ -2316,6 +2323,11 @@ terser@^5.10.0, terser@^5.14.1:
     acorn "^8.5.0"
     commander "^2.20.0"
     source-map-support "~0.5.20"
+
+three@^0.126.1:
+  version "0.126.1"
+  resolved "https://registry.yarnpkg.com/three/-/three-0.126.1.tgz#cf4e4e52060fd952f6f0d5440cbd422c66bc4be7"
+  integrity sha512-eOEXnZeE1FDV0XgL1u08auIP13jxdN9LQBAEmlErYzMxtIIfuGIAZbijOyookALUhqVzVOx0Tywj6n192VM+nQ==
 
 three@^0.143.0:
   version "0.143.0"

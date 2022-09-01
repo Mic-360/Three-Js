@@ -24,7 +24,7 @@ module.exports = {
     extensions: [".tsx", ".ts", ".js"],
   },
   output: {
-    filename: "bundle[contenthash].js",
+    filename: "bundle.[contenthash].js",
     path: path.resolve(__dirname, "dist"),
   },
   devServer: {

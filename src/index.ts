@@ -1,35 +1,125 @@
-import * as THREE from 'three';
+import { Controller } from "./controls";
+import * as THREE from "three";
+import { OrbitControls } from "@three-ts/orbit-controls";
+import { GLTFLoader } from "three/examples/jsm/loaders/GLTFLoader.js";
 
+// SCENE
 const scene = new THREE.Scene();
+scene.background = new THREE.Color(0xa8def0);
 
-const geometry = new THREE.BoxGeometry(1, 1, 1);
+// CAMERA
+const camera = new THREE.PerspectiveCamera(
+  45,
+  window.innerWidth / window.innerHeight,
+  0.1,
+  1000
+);
 
-const material = new THREE.MeshBasicMaterial({ color: 0x00ff00 });
+camera.position.set(5, 5, 0);
 
-const mesh = new THREE.Mesh(geometry, material);
+// RENDERER
+const renderer = new THREE.WebGLRenderer({ antialias: true });
+renderer.setSize(window.innerWidth, window.innerHeight);
+renderer.setPixelRatio(window.devicePixelRatio);
+renderer.shadowMap.enabled = true;
 
-mesh.scale.set(1, 2, 2);
-mesh.rotation.set(1, 0.5, 1, 'ZYX');
+// CONTROLS
+const orbit = new OrbitControls(camera, renderer.domElement);
+orbit.minDistance = 5;
+orbit.enableDamping = true;
+orbit.maxDistance = 15;
+orbit.enablePan = false;
+orbit.maxPolarAngle = Math.PI / 2 - 0.05;
+orbit.update();
 
-scene.add(mesh);
+// LIGHTS
+light();
 
-const AxisHelper = new THREE.AxesHelper(2);
-scene.add(AxisHelper);
+// MODEL WITH ANIMATIONS
+var characterControls: Controller;
+new GLTFLoader().load("../public/Soldier.glb", function (gltf) {
+  const model = gltf.scene;
+  model.traverse(function (object: any) {
+    if (object.isMesh) object.castShadow = true;
+  });
+  scene.add(model);
 
-const sizes = {
-  width: 1265,
-  height: 620,
-};
+  const gltfAnimations: THREE.AnimationClip[] = gltf.animations;
+  const mixer = new THREE.AnimationMixer(model);
+  const animationsMap: Map<string, THREE.AnimationAction> = new Map();
+  gltfAnimations
+    .filter((a) => a.name != "TPose")
+    .forEach((a: THREE.AnimationClip) => {
+      animationsMap.set(a.name, mixer.clipAction(a));
+    });
 
-const camera = new THREE.PerspectiveCamera(55, sizes.width / sizes.height);
-camera.position.set(1.2, 0.5, 5);
-scene.add(camera);
-
-const canvas = document.getElementById("webgl");
-const renderer = new THREE.WebGLRenderer({
-    canvas: canvas as HTMLCanvasElement,
+  characterControls = new Controller(
+    model,
+    mixer,
+    animationsMap,
+    orbit as any,
+    camera,
+    "Idle"
+  );
 });
 
-renderer.setSize(sizes.width, sizes.height);
+// CONTROL
+const keysPressed = {};
+document.addEventListener(
+  "keydown",
+  (event) => {
+    if (event.shiftKey && characterControls) {
+      characterControls.switchRunToggle();
+    } else {
+      (keysPressed as any)[event.key.toLowerCase()] = true;
+    }
+  },
+  false
+);
+document.addEventListener(
+  "keyup",
+  (event) => {
+    (keysPressed as any)[event.key.toLowerCase()] = false;
+  },
+  false
+);
 
-renderer.render(scene, camera);
+const clock = new THREE.Clock();
+
+// ANIMATE
+function animate() {
+  let mixerUpdateDelta = clock.getDelta();
+  if (characterControls) {
+    characterControls.update(mixerUpdateDelta, keysPressed);
+  }
+  orbit.update();
+  renderer.render(scene, camera);
+  requestAnimationFrame(animate);
+}
+document.body.appendChild(renderer.domElement);
+animate();
+
+// RESIZE HANDLER
+function onWindowResize() {
+  camera.aspect = window.innerWidth / window.innerHeight;
+  camera.updateProjectionMatrix();
+  renderer.setSize(window.innerWidth, window.innerHeight);
+}
+window.addEventListener("resize", onWindowResize);
+
+function light() {
+  scene.add(new THREE.AmbientLight(0xffffff, 0.7));
+
+  const dirLight = new THREE.DirectionalLight(0xffffff, 1);
+  dirLight.position.set(-60, 100, -10);
+  dirLight.castShadow = true;
+  dirLight.shadow.camera.top = 50;
+  dirLight.shadow.camera.bottom = -50;
+  dirLight.shadow.camera.left = -50;
+  dirLight.shadow.camera.right = 50;
+  dirLight.shadow.camera.near = 0.1;
+  dirLight.shadow.camera.far = 200;
+  dirLight.shadow.mapSize.width = 4096;
+  dirLight.shadow.mapSize.height = 4096;
+  scene.add(dirLight);
+}
