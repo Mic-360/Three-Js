@@ -37,7 +37,7 @@ light();
 
 // MODEL WITH ANIMATIONS
 var characterControls: Controller;
-new GLTFLoader().load("../public/Soldier.glb", function (gltf) {
+new GLTFLoader().load("Soldier.glb", function (gltf) {
   const model = gltf.scene;
   model.traverse(function (object: any) {
     if (object.isMesh) object.castShadow = true;
