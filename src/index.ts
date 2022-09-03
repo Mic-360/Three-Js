@@ -2,6 +2,7 @@ import { Controller } from "./controls";
 import * as THREE from "three";
 import { OrbitControls } from "@three-ts/orbit-controls";
 import { GLTFLoader } from "three/examples/jsm/loaders/GLTFLoader.js";
+import "./styles.css";
 
 // SCENE
 const scene = new THREE.Scene();
@@ -37,31 +38,34 @@ light();
 
 // MODEL WITH ANIMATIONS
 var characterControls: Controller;
-new GLTFLoader().load("Soldier.glb", function (gltf) {
-  const model = gltf.scene;
-  model.traverse(function (object: any) {
-    if (object.isMesh) object.castShadow = true;
-  });
-  scene.add(model);
-
-  const gltfAnimations: THREE.AnimationClip[] = gltf.animations;
-  const mixer = new THREE.AnimationMixer(model);
-  const animationsMap: Map<string, THREE.AnimationAction> = new Map();
-  gltfAnimations
-    .filter((a) => a.name != "TPose")
-    .forEach((a: THREE.AnimationClip) => {
-      animationsMap.set(a.name, mixer.clipAction(a));
+new GLTFLoader().load(
+  "Soldier.glb",
+  function (gltf) {
+    const model = gltf.scene;
+    model.traverse(function (object: any) {
+      if (object.isMesh) object.castShadow = true;
     });
+    scene.add(model);
 
-  characterControls = new Controller(
-    model,
-    mixer,
-    animationsMap,
-    orbit as any,
-    camera,
-    "Idle"
-  );
-});
+    const gltfAnimations: THREE.AnimationClip[] = gltf.animations;
+    const mixer = new THREE.AnimationMixer(model);
+    const animationsMap: Map<string, THREE.AnimationAction> = new Map();
+    gltfAnimations
+      .filter((a) => a.name != "TPose")
+      .forEach((a: THREE.AnimationClip) => {
+        animationsMap.set(a.name, mixer.clipAction(a));
+      });
+
+    characterControls = new Controller(
+      model,
+      mixer,
+      animationsMap,
+      orbit as any,
+      camera,
+      "Idle"
+    );
+  }
+);
 
 // CONTROL
 const keysPressed = {};

@@ -6,8 +6,9 @@
   "scripts": {
     "test": "node test/scripts.js",
     "dev": "webpack-dev-server",
-    "build": "webpack --mode=production"
+    "build": "webpack --mode production"
   },
+  "proxy": "https://github.com/Mic-360/Three-Js",
   "keywords": [],
   "author": "Bhaumic-kun",
   "license": "ISC",

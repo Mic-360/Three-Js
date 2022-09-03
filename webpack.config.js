@@ -34,9 +34,6 @@ module.exports = {
     client: {
       progress: true,
     },
-    // devMiddleware: {
-    //   writeToDisk: true,
-    // },
   },
   plugins: [
     new CleanWebpackPlugin(),
