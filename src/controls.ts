@@ -1,4 +1,4 @@
-import * as THREE from "three";
+import { Quaternion, Vector3 } from "three";
 import { OrbitControls } from "@three-ts/orbit-controls";
 import { A, D, DIRECTIONS, S, W } from "./keys";
 
@@ -14,10 +14,10 @@ export class Controller {
   currentAction: string;
 
   // temporary data
-  walkDirection = new THREE.Vector3();
-  rotateAngle = new THREE.Vector3(0, 1, 0);
-  rotateQuarternion: THREE.Quaternion = new THREE.Quaternion();
-  cameraTarget = new THREE.Vector3();
+  walkDirection = new Vector3();
+  rotateAngle = new Vector3(0, 1, 0);
+  rotateQuarternion: Quaternion = new Quaternion();
+  cameraTarget = new Vector3();
 
   // constants
   fadeDuration: number = 0.2;

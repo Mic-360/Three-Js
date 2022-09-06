@@ -50,7 +50,7 @@ module.exports = {
       patterns: [
         {
           from: "./public/Soldier.glb",
-          to: "./Soldier.glb",
+          to: "./*.glb",
         },
       ],
     }),

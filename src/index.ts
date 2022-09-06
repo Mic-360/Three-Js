@@ -1,15 +1,16 @@
 import { Controller } from "./controls";
-import * as THREE from "three";
+import { Scene, Color, PerspectiveCamera, WebGLRenderer, AnimationMixer } from "three";
+import { DirectionalLight, AmbientLight, Clock } from "three";
 import { OrbitControls } from "@three-ts/orbit-controls";
 import { GLTFLoader } from "three/examples/jsm/loaders/GLTFLoader.js";
 import "./styles.css";
 
 // SCENE
-const scene = new THREE.Scene();
-scene.background = new THREE.Color(0xa8def0);
+const scene = new Scene();
+scene.background = new Color(0xa8def0);
 
 // CAMERA
-const camera = new THREE.PerspectiveCamera(
+const camera = new PerspectiveCamera(
   45,
   window.innerWidth / window.innerHeight,
   0.1,
@@ -19,7 +20,7 @@ const camera = new THREE.PerspectiveCamera(
 camera.position.set(5, 5, 0);
 
 // RENDERER
-const renderer = new THREE.WebGLRenderer({ antialias: true });
+const renderer = new WebGLRenderer({ antialias: true });
 renderer.setSize(window.innerWidth, window.innerHeight);
 renderer.setPixelRatio(window.devicePixelRatio);
 renderer.shadowMap.enabled = true;
@@ -48,7 +49,7 @@ new GLTFLoader().load(
     scene.add(model);
 
     const gltfAnimations: THREE.AnimationClip[] = gltf.animations;
-    const mixer = new THREE.AnimationMixer(model);
+    const mixer = new AnimationMixer(model);
     const animationsMap: Map<string, THREE.AnimationAction> = new Map();
     gltfAnimations
       .filter((a) => a.name != "TPose")
@@ -88,7 +89,7 @@ document.addEventListener(
   false
 );
 
-const clock = new THREE.Clock();
+const clock = new Clock();
 
 // ANIMATE
 function animate() {
@@ -112,9 +113,9 @@ function onWindowResize() {
 window.addEventListener("resize", onWindowResize);
 
 function light() {
-  scene.add(new THREE.AmbientLight(0xffffff, 0.7));
+  scene.add(new AmbientLight(0xffffff, 0.7));
 
-  const dirLight = new THREE.DirectionalLight(0xffffff, 1);
+  const dirLight = new DirectionalLight(0xffffff, 1);
   dirLight.position.set(-60, 100, -10);
   dirLight.castShadow = true;
   dirLight.shadow.camera.top = 50;
