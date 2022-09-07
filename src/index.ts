@@ -5,11 +5,9 @@ import { OrbitControls } from "@three-ts/orbit-controls";
 import { GLTFLoader } from "three/examples/jsm/loaders/GLTFLoader.js";
 import "./styles.css";
 
-// SCENE
 const scene = new Scene();
 scene.background = new Color(0xa8def0);
 
-// CAMERA
 const camera = new PerspectiveCamera(
   45,
   window.innerWidth / window.innerHeight,
@@ -19,13 +17,11 @@ const camera = new PerspectiveCamera(
 
 camera.position.set(5, 5, 0);
 
-// RENDERER
 const renderer = new WebGLRenderer({ antialias: true });
 renderer.setSize(window.innerWidth, window.innerHeight);
 renderer.setPixelRatio(window.devicePixelRatio);
 renderer.shadowMap.enabled = true;
 
-// CONTROLS
 const orbit = new OrbitControls(camera, renderer.domElement);
 orbit.minDistance = 5;
 orbit.enableDamping = true;
@@ -34,10 +30,8 @@ orbit.enablePan = false;
 orbit.maxPolarAngle = Math.PI / 2 - 0.05;
 orbit.update();
 
-// LIGHTS
 light();
 
-// MODEL WITH ANIMATIONS
 var characterControls: Controller;
 new GLTFLoader().load(
   "Soldier.glb",
@@ -68,7 +62,6 @@ new GLTFLoader().load(
   }
 );
 
-// CONTROL
 const keysPressed = {};
 document.addEventListener(
   "keydown",
@@ -91,7 +84,6 @@ document.addEventListener(
 
 const clock = new Clock();
 
-// ANIMATE
 function animate() {
   let mixerUpdateDelta = clock.getDelta();
   if (characterControls) {
@@ -104,7 +96,6 @@ function animate() {
 document.body.appendChild(renderer.domElement);
 animate();
 
-// RESIZE HANDLER
 function onWindowResize() {
   camera.aspect = window.innerWidth / window.innerHeight;
   camera.updateProjectionMatrix();
