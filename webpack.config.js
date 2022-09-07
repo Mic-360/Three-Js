@@ -53,7 +53,7 @@ module.exports = {
           globOptions: {
             ignore: ["**/template.html"],
           },
-          to: "./[name].[ext]",
+          to: "./[name][ext]",
         },
       ],
     }),
