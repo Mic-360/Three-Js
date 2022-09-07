@@ -49,8 +49,11 @@ module.exports = {
     new CopyPlugin({
       patterns: [
         {
-          from: "./public/Soldier.glb",
-          to: "./*.glb",
+          from: "./public/*",
+          globOptions: {
+            ignore: ["**/template.html"],
+          },
+          to: "./[name].[ext]",
         },
       ],
     }),
