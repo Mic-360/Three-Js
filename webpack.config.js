@@ -4,6 +4,10 @@ const { CleanWebpackPlugin } = require("clean-webpack-plugin");
 const MiniCssExtractPlugin = require("mini-css-extract-plugin");
 const CopyPlugin = require("copy-webpack-plugin");
 
+const devServerHeaders = {
+  "Access-Control-Allow-Origin": "*",
+};
+
 module.exports = {
   mode: "development",
   entry: path.resolve(__dirname, "./src/index.ts"),
@@ -30,7 +34,9 @@ module.exports = {
   },
   devServer: {
     port: 8080,
+    headers: devServerHeaders,
     hot: true,
+    liveReload: true,
     compress: true,
     client: {
       progress: true,
