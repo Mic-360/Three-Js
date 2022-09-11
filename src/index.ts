@@ -15,7 +15,7 @@ const camera = new PerspectiveCamera(
   1000
 );
 
-camera.position.set(5, 5, 0);
+camera.position.set(15,10, 5);
 
 const renderer = new WebGLRenderer({ antialias: true });
 renderer.setSize(window.innerWidth, window.innerHeight);
@@ -25,7 +25,7 @@ renderer.shadowMap.enabled = true;
 const orbit = new OrbitControls(camera, renderer.domElement);
 orbit.minDistance = 5;
 orbit.enableDamping = true;
-orbit.maxDistance = 15;
+orbit.maxDistance = 30 ;
 orbit.enablePan = false;
 orbit.maxPolarAngle = Math.PI / 2 - 0.05;
 orbit.update();
@@ -34,12 +34,41 @@ light();
 
 var characterControls: Controller;
 new GLTFLoader().load(
+  "SFL.glb",
+  function (gltf) {
+    const model = gltf.scene;
+    model.traverse(function (object: any) {
+      if (object.isMesh) object.castShadow = true;
+    });
+    scene.add(model);
+
+    const gltfAnimations: THREE.AnimationClip[] = gltf.animations;
+    const mixer = new AnimationMixer(model);
+    const animationsMap: Map<string, THREE.AnimationAction> = new Map();
+    gltfAnimations
+      .filter((a) => a.name != "TPose")
+      .forEach((a: THREE.AnimationClip) => {
+        animationsMap.set(a.name, mixer.clipAction(a));
+      });
+
+    characterControls = new Controller(
+      model,
+      mixer,
+      animationsMap,
+      orbit as any,
+      camera,
+      "Idle"
+    );
+  }
+);
+new GLTFLoader().load(
   "Soldier.glb",
   function (gltf) {
     const model = gltf.scene;
     model.traverse(function (object: any) {
       if (object.isMesh) object.castShadow = true;
     });
+    gltf.scene.scale.set(5,5,5),
     scene.add(model);
 
     const gltfAnimations: THREE.AnimationClip[] = gltf.animations;

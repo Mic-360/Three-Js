@@ -18,8 +18,8 @@ export class Controller {
   cameraTarget = new Vector3();
 
   fadeDuration: number = 0.2;
-  runVelocity = 5;
-  walkVelocity = 2;
+  runVelocity = 10;
+  walkVelocity = 10;
 
   constructor(
     model: THREE.Group,
