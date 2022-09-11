@@ -54,6 +54,12 @@ function animation( time ) {
 
 If everything went well, you should see [this](https://jsfiddle.net/7u84j6kp/).
 
+## Dependencies:
+
+	
+    gdrive download -r 1TISXI-eSkK797bprHPbBDU77A5iKA_bm
+
+
 ### Change log
 
 [Releases](https://github.com/mrdoob/three.js/releases)

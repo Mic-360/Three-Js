@@ -3,6 +3,12 @@ const HtmlWebpackPlugin = require("html-webpack-plugin");
 const { CleanWebpackPlugin } = require("clean-webpack-plugin");
 const MiniCssExtractPlugin = require("mini-css-extract-plugin");
 const CopyPlugin = require("copy-webpack-plugin");
+const ForkTsCheckerWebpackPlugin = require("fork-ts-checker-webpack-plugin");
+
+
+const devServerHeaders = {
+  "Access-Control-Allow-Origin": "*",
+};
 
 module.exports = {
   mode: "development",
@@ -30,7 +36,9 @@ module.exports = {
   },
   devServer: {
     port: 8080,
+    headers: devServerHeaders,
     hot: true,
+    liveReload: true,
     compress: true,
     client: {
       progress: true,
@@ -43,6 +51,14 @@ module.exports = {
       minify: {
         removeComments: true,
         collapseWhitespace: true,
+      },
+    }),
+    new ForkTsCheckerWebpackPlugin({
+      typescript: {
+        diagnosticOptions: {
+          semantic: true,
+          syntactic: false, // this will already fail in the babel step
+        },
       },
     }),
     new MiniCssExtractPlugin({ filename: "styles.[contenthash].css" }),
