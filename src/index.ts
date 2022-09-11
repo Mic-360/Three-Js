@@ -41,24 +41,6 @@ new GLTFLoader().load(
       if (object.isMesh) object.castShadow = true;
     });
     scene.add(model);
-
-    const gltfAnimations: THREE.AnimationClip[] = gltf.animations;
-    const mixer = new AnimationMixer(model);
-    const animationsMap: Map<string, THREE.AnimationAction> = new Map();
-    gltfAnimations
-      .filter((a) => a.name != "TPose")
-      .forEach((a: THREE.AnimationClip) => {
-        animationsMap.set(a.name, mixer.clipAction(a));
-      });
-
-    characterControls = new Controller(
-      model,
-      mixer,
-      animationsMap,
-      orbit as any,
-      camera,
-      "Idle"
-    );
   }
 );
 new GLTFLoader().load(
