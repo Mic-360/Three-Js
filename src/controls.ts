@@ -18,7 +18,7 @@ export class Controller {
   cameraTarget = new Vector3();
 
   fadeDuration: number = 0.2;
-  runVelocity = 10;
+  runVelocity = 20;
   walkVelocity = 10;
 
   constructor(

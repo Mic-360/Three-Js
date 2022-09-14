@@ -1,11 +1,12 @@
 {
   "compilerOptions": {
+    "typeRoots": ["node_modules/@types"],
     /* Language and Environment */
     "target": "ESNext" /* Set the JavaScript language version for emitted JavaScript and include compatible library declarations. */,
     "module": "commonjs" /* Specify what module code is generated. */,
     "rootDir": "./src" /* Specify the root folder within your source files. */,
-    "allowJs": true,                                  /* Allow JavaScript files to be a part of your program. Use the `checkJS` option to get errors from these files. */
-    "sourceMap": true,                                /* Generates corresponding '.map' file. */
+    "allowJs": true /* Allow JavaScript files to be a part of your program. Use the `checkJS` option to get errors from these files. */,
+    "sourceMap": true /* Generates corresponding '.map' file. */,
     "outDir": "./dist/" /* Specify an output folder for all emitted files. */,
     "removeComments": true /* Disable emitting comments. */,
     "inlineSources": true /* Include source code in the sourcemaps inside the emitted JavaScript. */,
@@ -13,13 +14,13 @@
     "esModuleInterop": true /* Emit additional JavaScript to ease support for importing CommonJS modules. This enables 'allowSyntheticDefaultImports' for type compatibility. */,
     "forceConsistentCasingInFileNames": true /* Ensure that casing is correct in imports. */,
     "strict": true /* Enable all strict type-checking options. */,
-    "strictNullChecks": true,                         /* When type checking, take into account 'null' and 'undefined'. */
+    "strictNullChecks": true /* When type checking, take into account 'null' and 'undefined'. */,
     "noImplicitThis": true /* Enable error reporting when 'this' is given the type 'any'. */,
     "noUnusedLocals": true /* Enable error reporting when local variables aren't read. */,
     "noUnusedParameters": true /* Raise an error when a function parameter isn't read. */,
-    "noImplicitReturns": true,                        /* Report error when not all code paths in function return a value. */
-    "skipLibCheck": true               /* Skip type checking all .d.ts files. */
+    "noImplicitReturns": true /* Report error when not all code paths in function return a value. */,
+    "skipLibCheck": true /* Skip type checking all .d.ts files. */
   },
-  "include": ["src", "declaration.d.ts"],
-  "exclude": ["node_modules","test/script.js"]
+  "include": ["src", "declaration.d.ts", "test/index.js"],
+  "exclude": ["node_modules","test"]
 }
