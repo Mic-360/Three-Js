@@ -47,7 +47,6 @@ gui.add(debugObject, "reset");
  * Base
  */
 // Canvas
-const canvas = document.querySelector("canvas.webgl");
 
 // Scene
 const scene = new THREE.Scene();
@@ -130,6 +129,7 @@ const createSphere = (radius, position) => {
     shape: shape,
     material: defaultMaterial,
   });
+
   body.position.copy(position);
   // body.addEventListener('collide', playHitSound)
   world.addBody(body);
@@ -321,7 +321,7 @@ camera.position.set(0, 10, 30);
 scene.add(camera);
 
 // Controls
-const controls = new OrbitControls(camera, canvas);
+const controls = new OrbitControls(camera, renderer.domElement);
 controls.enableDamping = true;
 
 /**
